@@ -8,13 +8,15 @@ public class PlayerShooter : MonoBehaviour
     public Shooter shooter; // 사용할 총
     private PlayerInput playerInput; // 플레이어의 입력
 
-    public float reloadInterval = 10f; // 재장전 소요 시간
-    public float lastReloadTime = 0; // 직전의 장전 시점
+    public float reloadInterval; // 재장전 소요 시간
+    public float lastReloadTime; // 직전의 장전 시점
 
-    private void Start()
+    private void Awake()
     {
         // 사용할 컴포넌트들을 가져오기
         playerInput = GetComponent<PlayerInput>();
+        reloadInterval = 10f;
+        lastReloadTime = 0;
     }
 
     private void Update()

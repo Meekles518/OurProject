@@ -7,8 +7,8 @@ using UnityEngine.UIElements;
 // 플레이어 우주선의 이동 및 회전 등 움직임을 제어
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed = 5f; // 앞뒤 움직임의 속도
-    public float rotateSpeed = 100f; // 좌우 회전 속도
+    public float moveSpeed; // 앞뒤 움직임의 속도
+    public float rotateSpeed; // 좌우 회전 속도
 
     //private Animator playerAnimator; // 플레이어 캐릭터의 애니메이터
     private PlayerInput playerInput; // 플레이어 입력을 알려주는 컴포넌트
@@ -19,12 +19,15 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 mousePosition; // 월드맵 상에서의 현재 마우스 위치
     private float actualRotate; // 현재 각도에서 rotateDirection을 만족하기 위해 회전해야하는 각도(도)
 
-    private void Start()
+    private void Awake()
     {
         // 사용할 컴포넌트들의 참조를 가져오기
         playerInput = GetComponent<PlayerInput>();
         playerRigidbody = GetComponent<Rigidbody2D>();
         //playerAnimator = GetComponent<Animator>();
+
+        moveSpeed = 5f;
+        rotateSpeed = 100f;
     }
 
     // FixedUpdate는 물리 갱신 주기에 맞춰 실행됨

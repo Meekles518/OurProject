@@ -5,19 +5,19 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
 
-    //Prefabì„ ë³´ê´€í•   ë³€ìˆ˜
+    //PrefabÀ» º¸°üÇÒ  º¯¼ö
     public GameObject[] Prefabs;
 
-    //Pool ì„ ë‹´ì„ Listë³€ìˆ˜
+    //Pool À» ´ãÀ» Listº¯¼ö
     List<GameObject>[] Pools;
 
-    //Pools list ì´ˆê¸°í™”
+    //Pools list ÃÊ±âÈ­
     private void Awake()
     {
-        // Poolsì— ë‹´ì„ í”„ë¦¬íŒ¹ì˜ ê°œìˆ˜ë¥¼ ë°°ì—´ê¸¸ì´ë¡œ ì„¤ì •
+        // Pools¿¡ ´ãÀ» ÇÁ¸®ÆÕÀÇ °³¼ö¸¦ ¹è¿­±æÀÌ·Î ¼³Á¤
         Pools = new List<GameObject>[Prefabs.Length];
 
-        // ê° í”„ë¦¬íŒ¹ì˜ ì¢…ë¥˜ë¥¼ List<GameObject>ë¡œ ë¶ˆëŸ¬ì˜´
+        // °¢ ÇÁ¸®ÆÕÀÇ Á¾·ù¸¦ List<GameObject>·Î ºÒ·¯¿È
         for (int i = 0; i < Pools.Length; i++)
         {
 
@@ -26,36 +26,37 @@ public class PoolManager : MonoBehaviour
         }
     }
 
-    //GameObjectë¥¼ returní•´ì£¼ëŠ” í•¨ìˆ˜ 
-    public GameObject Get(int idx)
+    //GameObject¸¦ returnÇØÁÖ´Â ÇÔ¼ö 
+    public GameObject Get(int idx, Transform fireTransform)
     {
-        // Select ì„ ì–¸, ì´ˆê¸°í™”
+        // Select ¼±¾ğ, ÃÊ±âÈ­
         GameObject Select = null;
 
-        //Pools[idx]ì— ëŒ€í•´ì„œ Eë¡œ ì ‘ê·¼
+        //Pools[idx]¿¡ ´ëÇØ¼­ E·Î Á¢±Ù
         foreach (GameObject E in Pools[idx])
         {
 
-            //Eê°€ ë¹„í™œì„¤í™” ë˜ì–´ìˆëŠ” ê²½ìš°
+            //E°¡ ºñÈ°¼³È­ µÇ¾îÀÖ´Â °æ¿ì
             if (!E.activeSelf)
             {
 
-                //Eë¥¼ SetActiveë¡œ í™œì„±í™”
+                //E¸¦ SetActive·Î È°¼ºÈ­
                 Select = E;
+                Select.transform.position = fireTransform.position;
                 Select.SetActive(true);
                 break;
             }
         }
 
 
-        //Selectì˜ ê°’ì´ ì—†ì„ ê²½ìš°
+        //SelectÀÇ °ªÀÌ ¾øÀ» °æ¿ì
         if (!Select)
         {
 
-            //Instantiateë¡œ Prefabs[idx]ì— ìˆëŠ” ì›ì†Œë¥¼ ìƒì„±í•˜ê³ ,
-            Select = Instantiate(Prefabs[idx], transform);
+            //Instantiate·Î Prefabs[idx]¿¡ ÀÖ´Â ¿ø¼Ò¸¦ »ı¼ºÇÏ°í,
+            Select = Instantiate(Prefabs[idx], fireTransform.position, fireTransform.rotation);
 
-            //Poolsì— Addí•´ì£¼ê¸°
+            //Pools¿¡ AddÇØÁÖ±â
             Pools[idx].Add(Select);
 
         }
