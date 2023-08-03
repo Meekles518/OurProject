@@ -7,15 +7,14 @@ using UnityEngine.UIElements;
 // 플레이어 우주선의 이동 및 회전 등 움직임을 제어
 public class PlayerMovement : MonoBehaviour
 {
-    public float moveSpeed; // 앞뒤 움직임의 속도
-    public float rotateSpeed; // 좌우 회전 속도
+    private PlayerInput playerInput; // PlayerInput을 가져옴
+    private Rigidbody2D playerRigidbody; // 플레이어의 리지드바디
 
-    //private Animator playerAnimator; // 플레이어 캐릭터의 애니메이터
-    private PlayerInput playerInput; // 플레이어 입력을 알려주는 컴포넌트
-    private Rigidbody2D playerRigidbody; // 플레이어 캐릭터의 리지드바디
+    public float moveSpeed; // 이동 속도
+    public float rotateSpeed; // 회전 속도
 
-    private Vector2 moveDirection; // 실제로 이동해야 하는 방향
-    private Vector2 rotateDirection; // 내 우주선이 회전해야하는 방향
+    private Vector2 moveDirection; // 우주선이 이동해야하는 방향
+    private Vector2 rotateDirection; // 우주선이 회전해야하는 방향
     private Vector2 mousePosition; // 월드맵 상에서의 현재 마우스 위치
     private float actualRotate; // 현재 각도에서 rotateDirection을 만족하기 위해 회전해야하는 각도(도)
 
@@ -26,20 +25,19 @@ public class PlayerMovement : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
         //playerAnimator = GetComponent<Animator>();
 
+        // 이동속도 설정
         moveSpeed = 5f;
+        // 회전속도 설정
         rotateSpeed = 100f;
     }
 
-    // FixedUpdate는 물리 갱신 주기에 맞춰 실행됨
+    // 특정 물리주기에 맞춰 Rotate와 Move 실행
     private void FixedUpdate()
     {
-        // 회전 실행
-        Rotate();
         // 움직임 실행
         Move();
-
-        // 입력값에 따라 애니메이터의 Move 파라미터 값을 변경
-        //playerAnimator.SetFloat("Move", playerInput.move);
+        // 회전 실행
+        Rotate();
     }
 
     // 입력값에 따라 우주선을 움직임
@@ -47,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // 가로축, 세로축 입력값을 통해 moveDirection 구함
         moveDirection = new Vector2(playerInput.moveHorizontal, playerInput.moveVertical);
-        // 그 방향의 단위벡터 * 이동속도만큼의 addForce를 해줌
+        // 그 방향의 단위벡터 * 이동속도만큼의 addForce를 해줌 (관성 의도)
         playerRigidbody.AddForce(moveDirection.normalized * moveSpeed);
      
     }
@@ -72,11 +70,13 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
 
+        // 시계방향으로 회전이 더 가까울 때 시계방향으로 회전
         else if (actualRotate > 180)
         {
             transform.Rotate(0, 0, -Time.deltaTime * rotateSpeed, Space.Self);
         }
 
+        // 반시계방향으로 회전이 더 가까울 때 반시계방향으로 회전
         else if (actualRotate < 180)
         {
             transform.Rotate(0, 0, Time.deltaTime * rotateSpeed, Space.Self);
