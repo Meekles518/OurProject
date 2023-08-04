@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 오브젝트의 지속적인 생성, 파괴에 의한 메모리 손실을 없애기 위해 제작
+// 모든 프리팹들을 리스트로 저장해 각 리스트에서 필요한 오브젝트를 꺼내서 사용
 public class PoolManager : MonoBehaviour
 {
 
@@ -40,9 +42,12 @@ public class PoolManager : MonoBehaviour
             if (!E.activeSelf)
             {
 
-                //E를 SetActive로 활성화
+                // Select에 E를 할당
                 Select = E;
+                // 위치를 발사기의 위치로 변경
+                // 이렇게 안하면 마지막으로 비활성화된 자리에서 날아감
                 Select.transform.position = fireTransform.position;
+                // 활성화
                 Select.SetActive(true);
                 break;
             }
@@ -53,7 +58,7 @@ public class PoolManager : MonoBehaviour
         if (!Select)
         {
 
-            //Instantiate로 Prefabs[idx]에 있는 원소를 생성하고,
+            //Instantiate로 Prefabs[idx]에 있는 원소를 발사기의 위치에 생성하고,
             Select = Instantiate(Prefabs[idx], fireTransform.position, fireTransform.rotation);
 
             //Pools에 Add해주기

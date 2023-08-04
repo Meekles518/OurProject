@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Bullet : MonoBehaviour, IOnDamage
+// 생성된 총알의 행동을 제어
+public class Bullet : MonoBehaviour
 {
     private Rigidbody2D rb2; // 총알의 리지드바디
     public GameObject player; // 이 총알을 발사하는 주체 플레이어
     private bool dead; // 이 총알의 활성화 여부를 확인해줄 변수
-
-    public float damage; // 총알의 데미지
-    public float health; // 총알의 체력
     public float speed; // 총알의 속도
 
     private Vector3 moveDirection3; // 총알의 이동방향 (Vector3)
@@ -23,9 +21,6 @@ public class Bullet : MonoBehaviour, IOnDamage
     {
         // 현재 오브젝트의 리지드바디를 가져옴
         rb2 = gameObject.GetComponent<Rigidbody2D>();       
-        // 필요한 변수들의 초기화
-        damage = 10f;
-        health = 100f;
         speed = 10f;
         spreadRange = 5f;
         // 최종 탄퍼짐을 탄퍼짐 정도 사이에서 랜덤하게 결정
@@ -73,31 +68,6 @@ public class Bullet : MonoBehaviour, IOnDamage
         }
     }
 
-    public virtual void onDamage(float otherDamage)
-    {
-        //임의로 식을 설정해봄, 받는 데미지는 상대 데미지에 정비례, 내 데미지 증가 시 감소
-        health -= otherDamage * 100 / (100 + damage);
-
-        // 체력이 0 이하 && 아직 죽지 않았다면 사망 처리 실행
-        if (health <= 0)
-        {
-           gameObject.SetActive(false);
-           dead = true;
-            
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.tag != "Player")
-        {
-            IOnDamage onDamage = other.GetComponent<IOnDamage>();
-            if (onDamage != null)
-            {
-                onDamage.onDamage(damage);
-            }
-           
-        }
-    }
+  
 
 }
