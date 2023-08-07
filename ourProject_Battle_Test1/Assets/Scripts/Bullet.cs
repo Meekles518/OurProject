@@ -20,8 +20,10 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         // 현재 오브젝트의 리지드바디를 가져옴
-        rb2 = gameObject.GetComponent<Rigidbody2D>();       
+        rb2 = gameObject.GetComponent<Rigidbody2D>();
+        // 속도 선언
         speed = 10f;
+        // 탄퍼짐 정도 선언
         spreadRange = 5f;
         // 최종 탄퍼짐을 탄퍼짐 정도 사이에서 랜덤하게 결정
         spread = Random.Range(-spreadRange, spreadRange);
@@ -47,19 +49,25 @@ public class Bullet : MonoBehaviour
     // 총알에 velocity를 부여해줌
     private void FixedUpdate()
     {
+        // 총알의 속도를 원하는 값으로 유지
         rb2.velocity = moveDirection2.normalized * speed;       
     }
 
+    // 총알이 일정 조건을 만족하면 비활성화 시키는 코루틴
     private IEnumerator Disable()
     {
+        // 죽은 상태가 아니라면
         while (!dead)
         {
+            // 플레이어와 총알 오브젝트 사이의 거리를 계산
             float distance = Vector2.Distance(player.transform.position, gameObject.transform.position);
 
+            // 거리가 100f 이내라면 1초후 코루틴 재실행
             if (distance <= 100f)
             {
                 yield return new WaitForSeconds(1f);
             }
+            // 거리가 100f 초과라면 총알을 비활성화, 상태를 죽음으로 바꿈
             else
             {
                 gameObject.SetActive(false);
@@ -67,7 +75,4 @@ public class Bullet : MonoBehaviour
             }          
         }
     }
-
-  
-
 }

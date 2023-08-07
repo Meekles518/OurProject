@@ -44,6 +44,7 @@ public class Shooter : MonoBehaviour
 
     private void FixedUpdate()
     {
+        // 총의 현재 위치를 지속적으로 업데이트
         fireTransform = gameObject.transform;
     }
 
@@ -65,16 +66,13 @@ public class Shooter : MonoBehaviour
 
     // 실제 발사 처리
     private void Shot()
-    {
-       
-
-        // 발사 이펙트 재생 시작
+    {      
+        // 발사로직 코루틴 실행
         StartCoroutine("ShotLogic");
 
         // 남은 탄환의 수를 -1
         magAmmo--;
         
-
         if (magAmmo <= 0)
         {
             // 탄창에 남은 탄약이 없다면, 총의 현재 상태를 Empty으로 갱신
@@ -101,28 +99,22 @@ public class Shooter : MonoBehaviour
     // 필요한 투사체를 생성해서 발사
     private void ShootProjectiles()
     {
-
         // 풀에서 투사체를 불러와 발사기 위치에 생성
         GameManager.instance.poolManager.Get(0, fireTransform);
         //투사체를 발사한 위치 반대 방향으로 플레이어에게 반동을 줌
         playerRigidbody.AddForce(-fireTransform.up.normalized * recoil);
-
     }
 
 
-    // 재장전 시도
+    // 재장전
     public void Reload()
     {
-        if (state == State.Reloading || magAmmo >= magCapacity)
+        // 이미 재장전 중이거나 탄창에 탄약이 이미 가득한 경우 재장전 할수 없다
+        if (state != State.Reloading && magAmmo < magCapacity)
         {
-            // 이미 재장전 중이거나 탄창에 탄약이 이미 가득한 경우 재장전 할수 없다
-            
+            // 재장전 처리 시작
+            StartCoroutine(ReloadRoutine());
         }
-
-        // 재장전 처리 시작
-        StartCoroutine(ReloadRoutine());
-        
-        
     }
 
     // 실제 재장전 처리를 진행
