@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 // 생성된 총알의 행동을 제어
-public class Bullet : MonoBehaviour
+public class Enemy_Bullet : MonoBehaviour
 {
     private Rigidbody2D rb2; // 총알의 리지드바디
-    public GameObject player; // 이 총알을 발사하는 주체 플레이어
+    public GameObject enemy; // 이 총알을 발사하는 주체 플레이어
     private bool dead; // 이 총알의 활성화 여부를 확인해줄 변수
     public float speed; // 총알의 속도
 
@@ -16,6 +16,10 @@ public class Bullet : MonoBehaviour
     private Vector2 bulletPosition; // 현재 총알의 위치
     public float spreadRange; // 탄퍼짐 정도
     private float spread; // 최종 탄퍼짐
+
+    public RaycastHit2D[] Targets;
+    public LayerMask Target_layer;
+    public Transform Nearest_enemy;
 
     private void Awake()
     {
@@ -32,25 +36,58 @@ public class Bullet : MonoBehaviour
     // 풀매니저에서 비활성화된 총알이 활성화 될때 마다 작동할 매서드
     private void OnEnable()
     {
+        Target_layer = LayerMask.GetMask("Enemy");
+        Targets = Physics2D.CircleCastAll(transform.position, 10, Vector2.zero, 0, Target_layer);
+        Nearest_enemy = Nearest();
         // 총알의 비활성화 여부를 거짓으로 바꿈
         dead = false;
-        // 총알을 발사 할 주체인 플레이어를 찾음
-        player = GameObject.Find("Player");
         // 총알의 이동방향을 플레이어가 향하는 방향으로 설정
-        moveDirection3 = Quaternion.AngleAxis(spread, new Vector3(0, 0, 1)) * player.transform.up;
+        moveDirection3 = Quaternion.AngleAxis(spread, new Vector3(0, 0, 1)) * Nearest_enemy.transform.up;
         // 계산에 필요한 Vector2 값으로 위의 방향을 변경해줌
         moveDirection2 = (Vector2)moveDirection3;
         // 총알의 현재 위치를 계산
         bulletPosition = new Vector2(transform.position.x, transform.position.y);
+       
         // 총알이 계속 남아있지 않도록 하는 코루틴 Disable을 실행
         StartCoroutine(Disable());
+    }
+
+    Transform Nearest() {
+
+        //가장 가까운 Target을 돌려줄 변수
+        Transform Result = null;
+
+        //Player와 가장 가까운 Target의 거리를 저장할 변수, 초기값은 임의로 100으로 설정
+        float Difference = 100f;
+
+        //Targets에 들어있는 모든 원소에 foreach로 접근
+        foreach (RaycastHit2D Target in Targets) {
+
+            //Player의 좌표와, Target의 좌표를 가져오기
+            Vector3 My_pos = transform.position;
+            Vector3 Target_pos = Target.transform.position;
+
+            //Distance를 통해 Player와 Targer의 거리를 가져오기
+            float Current_difference = Vector3.Distance(My_pos, Target_pos);
+
+            //현재 foreach문의 Target과의 거리가, 저장되어 있는 Player - Target 간의 거리보다 짧으면
+            //Difference와 Result를 새로 초기화
+            if (Current_difference < Difference) {
+
+                //더 가까운 거리, Target으로 교체
+                Difference = Current_difference;
+                Result = Target.transform;
+            }
+        }
+
+        return Result;
     }
 
     // 총알에 velocity를 부여해줌
     private void FixedUpdate()
     {
         // 총알의 속도를 원하는 값으로 유지
-        rb2.velocity = moveDirection2.normalized * speed;       
+        rb2.velocity = moveDirection2.normalized * speed;
     }
 
     // 총알이 일정 조건을 만족하면 비활성화 시키는 코루틴
@@ -60,7 +97,7 @@ public class Bullet : MonoBehaviour
         while (!dead)
         {
             // 플레이어와 총알 오브젝트 사이의 거리를 계산
-            float distance = Vector2.Distance(player.transform.position, gameObject.transform.position);
+            float distance = Vector2.Distance(Nearest_enemy.transform.position, gameObject.transform.position);
 
             // 거리가 100f 이내라면 1초후 코루틴 재실행
             if (distance <= 100f)
@@ -72,7 +109,7 @@ public class Bullet : MonoBehaviour
             {
                 gameObject.SetActive(false);
                 dead = true;
-            }          
+            }
         }
     }
 }

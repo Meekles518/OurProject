@@ -15,17 +15,18 @@ public class Shooter : MonoBehaviour
     public State state { get; private set; } // 현재 총의 상태
 
     public Transform fireTransform; // 투사체가 발사될 위치
-    public Rigidbody2D playerRigidbody; // 플레이어의  Rigidbody
+    public Rigidbody2D objectRigidbody; // 플레이어의  Rigidbody
 
     public int magCapacity; // 탄창 용량
     public int magAmmo; // 현재 탄창에 남아있는 탄약
-    public float recoil = 10f; // 발사시 반동
+    public float recoil; // 발사시 반동
+    public int bulletType;
 
-    public float timeBetFire = 1.0f; // 투사체 발사 간격
+    public float timeBetFire; // 투사체 발사 간격
     private float lastFireTime; // 총을 마지막으로 발사한 시점
     public int projectilesPerFire; // 한번 클릭시 발사하는 투사체 수
-    public float timeBetProjectiles = 0.1f; // 한번 클릭시 발사되는 투사체 간의 시간 간격
-    public float reloadTime = 1f; // 재장전 소요 시간
+    public float timeBetProjectiles; // 한번 클릭시 발사되는 투사체 간의 시간 간격
+    public float reloadTime; // 재장전 소요 시간
 
 
     private void OnEnable()
@@ -36,10 +37,6 @@ public class Shooter : MonoBehaviour
         state = State.Ready;
         // 마지막으로 총을 쏜 시점을 초기화
         lastFireTime = 0;
-        // 한번 클릭시 발사하는 투사체 수를 정해줌
-        projectilesPerFire = 2;
-        //최대 탄창용량 설정
-        magCapacity = 10;
     }
 
     private void FixedUpdate()
@@ -100,9 +97,9 @@ public class Shooter : MonoBehaviour
     private void ShootProjectiles()
     {
         // 풀에서 투사체를 불러와 발사기 위치에 생성
-        GameManager.instance.poolManager.Get(0, fireTransform);
+        GameManager.instance.poolManager.Get(bulletType, fireTransform);
         //투사체를 발사한 위치 반대 방향으로 플레이어에게 반동을 줌
-        playerRigidbody.AddForce(-fireTransform.up.normalized * recoil);
+        objectRigidbody.AddForce(-fireTransform.up.normalized * recoil);
     }
 
 
