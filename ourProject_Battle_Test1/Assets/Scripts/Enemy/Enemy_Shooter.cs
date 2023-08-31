@@ -31,7 +31,7 @@ public class Enemy_Shooter : MonoBehaviour
     // 입력을 감지하고 총 발사하거나 재장전
     private void FixedUpdate()
     {
-        ShootPlayer = true;
+        ShootPlayer = false;
         if (ShootPlayer == true)
         {
             shooter.Fire();

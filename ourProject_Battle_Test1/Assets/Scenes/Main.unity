@@ -140,11 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54717ded4726ca048b93d9782737b4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Scan_range: 0
-  Target_layer:
-    serializedVersion: 2
-    m_Bits: 64
-  Target: {fileID: 0}
+  player: {fileID: 0}
   moveSpeed: 0
   rotateSpeed: 0
 --- !u!114 &31596992
@@ -676,6 +672,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolManager: {fileID: 1805543529}
+  player: {fileID: 2138579590}
+  playerInput: {fileID: 2138579591}
 --- !u!4 &1219653222
 Transform:
   m_ObjectHideFlags: 0
@@ -852,6 +850,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5773292645655652054, guid: 5db683ce4f18e7d43b590b9c0ea2dc67, type: 3}
   m_PrefabInstance: {fileID: 7756615991315573692}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2138579591 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4981880175645552730, guid: 5db683ce4f18e7d43b590b9c0ea2dc67, type: 3}
+  m_PrefabInstance: {fileID: 7756615991315573692}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fc358b1d36379844a34c30fc00d160c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7756615991315573692
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -46,8 +46,9 @@ public class PlayerMovement : MonoBehaviour
         // 가로축, 세로축 입력값을 통해 moveDirection 구함
         moveDirection = new Vector2(playerInput.moveHorizontal, playerInput.moveVertical);
         // 그 방향의 단위벡터 * 이동속도만큼의 addForce를 해줌 (관성 의도)
-        playerRigidbody.AddForce(moveDirection.normalized * moveSpeed);
-     
+        //playerRigidbody.AddForce(moveDirection.normalized * moveSpeed);
+        playerRigidbody.velocity = moveDirection.normalized * moveSpeed;
+
     }
 
     // 마우스 방향으로 우주선을 회전
