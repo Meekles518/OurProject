@@ -143,6 +143,7 @@ MonoBehaviour:
   player: {fileID: 0}
   moveSpeed: 0
   rotateSpeed: 0
+  x_Random: 0
 --- !u!114 &31596992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +176,18 @@ MonoBehaviour:
   reloadInterval: 0
   lastReloadTime: 0
   ShootPlayer: 0
+--- !u!114 &31596994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31596986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8d23d5b897cb842baadbd24411d45e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &75124212
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +799,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1455692199383189734, guid: bd420b3d3a212a04db3b376f4a92c50e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 31596992}
+    - targetCorrespondingSourceObject: {fileID: 1455692199383189734, guid: bd420b3d3a212a04db3b376f4a92c50e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 31596994}
   m_SourcePrefab: {fileID: 100100000, guid: bd420b3d3a212a04db3b376f4a92c50e, type: 3}
 --- !u!1 &1805543527
 GameObject:

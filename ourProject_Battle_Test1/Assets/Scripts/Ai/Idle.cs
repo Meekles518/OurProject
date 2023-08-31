@@ -1,0 +1,40 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.AI;
+
+public class Idle : State
+{
+
+    public Idle(GameObject _enemy, Transform _player)
+        : base(_enemy, _player)
+    {
+
+        name = STATE.IDLE;
+    }
+
+    public override void Enter()
+    {
+
+        base.Enter();
+    }
+
+    public override void Update()
+    {
+
+        if (Aggro())
+        {
+            Debug.Log("attack");
+            //nextState = new Pursue(enemy, player);
+            stage = EVENT.EXIT;
+        }
+        
+    }
+
+    public override void Exit()
+    {
+
+
+        base.Exit();
+    }
+}
