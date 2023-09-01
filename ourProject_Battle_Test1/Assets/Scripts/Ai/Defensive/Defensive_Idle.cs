@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Idle : State
+public class Defensive_Idle : Defensive_State
 {
 
-    public Idle(GameObject _enemy, Transform _player)
+    public Defensive_Idle(GameObject _enemy, Transform _player)
         : base(_enemy, _player)
     {
 

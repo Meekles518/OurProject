@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AI : MonoBehaviour
+public class Defensive_AI : MonoBehaviour
 {
 
-    State currentState;
+    Defensive_State currentState;
 
     public Transform player;
     public Vector2 Spawnposition;
+    static public float smallAgrro = 10f;
+    static public float largeAgrro = 20f;
+
 
     void Start()
     {
-
-        currentState = new Idle(gameObject, player);
+        player = GameObject.Find("Player").transform;
+        currentState = new Defensive_Idle(gameObject, player);
         Spawnposition = this.transform.position;
 
     }

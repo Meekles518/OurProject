@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 //using static UnityEngine.RuleTile.TilingRuleOutput;
 
-public class State
+public class Defensive_State
 {
 
     public enum STATE
@@ -30,15 +30,16 @@ public class State
     protected EVENT stage;
     protected GameObject enemy;
     protected Transform player;
-    protected State nextState;
+    protected Defensive_State nextState;
 
-    float smallAgrro = 10f;
-    float largeAgrro = 20.0f;
+   
+    public float smallAgrro;
+    public float largeAgrro;
     public LayerMask Target_layer;
     public Vector2 Spawnposition;
 
 
-    public State(GameObject _enemy, Transform _player)
+    public Defensive_State(GameObject _enemy, Transform _player)
     {
 
         enemy = _enemy;
@@ -50,7 +51,7 @@ public class State
     public virtual void Update() { stage = EVENT.UPDATE; }
     public virtual void Exit() { stage = EVENT.EXIT; }
 
-    public State Process()
+    public Defensive_State Process()
     {
 
         if (stage == EVENT.ENTER) Enter();
@@ -67,8 +68,10 @@ public class State
 
     public bool Aggro()
     {
-
+        
         Vector3 direction = player.position - enemy.transform.position;
+        smallAgrro = Defensive_AI.smallAgrro;
+        largeAgrro = Defensive_AI.largeAgrro;
 
         if (direction.magnitude <= largeAgrro)
         {
@@ -93,7 +96,7 @@ public class State
         return false;
     }
     //¿©±â
-    public class Patrol : State
+    /*public class Patrol : State
     {
 
         int currentIndex = -1;
@@ -153,7 +156,7 @@ public class State
 
                 nextState = new RunAway(npc, agent, anim, player);
                 stage = EVENT.EXIT;
-            }*/
+            }
         }
 
         public override void Exit()
@@ -162,9 +165,9 @@ public class State
 
             base.Exit();
         }
-    }
+    }*/
 
-    public class Pursue : State
+    public class Pursue : Defensive_State
     {
 
         public Pursue(GameObject _enemy, Transform _player)
@@ -188,7 +191,7 @@ public class State
 
 
 
-            if (enemy == null)
+            /*if (enemy == null)
             {
 
                 if (CanAttackPlayer())
@@ -203,7 +206,7 @@ public class State
                     nextState = new Patrol(enemy, player);
                     stage = EVENT.EXIT;
                 }
-            }
+            }*/
         }
 
         public override void Exit()
@@ -214,7 +217,7 @@ public class State
         }
     }
 
-    public class Attack : State
+    public class Attack : Defensive_State
     {
 
         float rotationSpeed = 2.0f;
@@ -246,10 +249,10 @@ public class State
             enemy.transform.rotation =
                 Quaternion.Slerp(enemy.transform.rotation, Quaternion.LookRotation(direction), Time.deltaTime * rotationSpeed);
 
-            if (!CanAttackPlayer())
+            if (!Aggro())
             {
 
-                nextState = new Idle(enemy, player);
+                nextState = new Defensive_Idle(enemy, player);
                 shoot.Stop();
                 stage = EVENT.EXIT;
             }
@@ -263,7 +266,7 @@ public class State
         }
     }
 
-    public class RunAway : State
+    public class RunAway : Defensive_State
     {
 
         GameObject safeLocation;
@@ -289,7 +292,7 @@ public class State
             if (enemy == null)
             {
 
-                nextState = new Idle(enemy, player);
+                nextState = new Defensive_Idle(enemy, player);
                 stage = EVENT.EXIT;
             }
         }

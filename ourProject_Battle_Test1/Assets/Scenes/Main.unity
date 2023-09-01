@@ -188,6 +188,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c8d23d5b897cb842baadbd24411d45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  Spawnposition: {x: 0, y: 0}
+  largeAgrro: 20
 --- !u!1 &75124212
 GameObject:
   m_ObjectHideFlags: 0
