@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-// 생성된 총알의 행동을 제어
+// 생성된 플레이어의 총알의 행동을 제어하는 스크립트
 public class Player_Bullet : MonoBehaviour
 {
     private Rigidbody2D rb2; // 총알의 리지드바디
-    public GameObject player; // 이 총알을 발사하는 주체 플레이어
+    public GameObject player; // 이 총알을 발사하는 오브젝트
     private bool dead; // 이 총알의 활성화 여부를 확인해줄 변수
     public float speed; // 총알의 속도
 
@@ -54,6 +54,7 @@ public class Player_Bullet : MonoBehaviour
     }
 
     // 총알이 일정 조건을 만족하면 비활성화 시키는 코루틴
+    // 추후에 개선 필요 (예를 들어 주변 적대 오브젝트를 검색해 없으면 비활성화 하는 식으로)
     private IEnumerator Disable()
     {
         // 죽은 상태가 아니라면

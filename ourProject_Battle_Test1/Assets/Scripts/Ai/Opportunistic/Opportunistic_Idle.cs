@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-// 수비형 적이 초기 스폰위치에 있는 상태
-public class Defensive_Idle : Defensive_State
+// 기회주의형 적이 초기 스폰위치에 있는 상태
+public class Opportunistic_Idle : Opportunistic_State
 {
-    // Idle 스테이트 선언
-    public Defensive_Idle(GameObject _enemy, Transform _player, Enemy_Control _control)
+    public Opportunistic_Idle(GameObject _enemy, Transform _player, Enemy_Control _control)
         : base(_enemy, _player, _control)
     {
-
+        // 현재 State의 이름을 IDLE로 변경
         name = STATE.IDLE;
     }
 
     // Idle 진입시
     public override void Enter()
     {
-        // 수비형적의 어그로 여부 = 거짓
-        GameManager.instance.isDefensiveEngage = false;
-        Debug.Log("Idle"); // 로그에 뜨게함
+        Debug.Log("Idle");
         base.Enter();
     }
 
@@ -29,15 +26,14 @@ public class Defensive_Idle : Defensive_State
         // 사격 불가
         control.isShoot = false;
 
-        // 어그로가 끌렸을 시
-        if (Aggro())
+        // 수비형적의 어그로가 끌리거나 본인의 어그로가 끌렸다면
+        if (GameManager.instance.isDefensiveEngage || Aggro())
         {
             // 다음 스테이트를 Pursue로 설정
-            nextState = new Defensive_Pursue(enemy, player, control);
+            nextState = new Opportunistic_Pursue(enemy, player, control);
             // 다음 이벤트를 Exit으로 설정
             stage = EVENT.EXIT;
         }
-        
     }
 
     public override void Exit()

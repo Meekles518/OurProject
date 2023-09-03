@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6883673443255968753}
   - component: {fileID: 9128150176682677494}
   - component: {fileID: 2034521673716294740}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Player Bullet
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -179,3 +179,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 100
   damage: 20
+  collideRate: 0

@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
-        // 사용할 컴포넌트들의 참조를 가져오기
+        // 사용할 컴포넌트들을 가져오기
         playerInput = GetComponent<PlayerInput>();
         playerRigidbody = GetComponent<Rigidbody2D>();
         //playerAnimator = GetComponent<Animator>();
@@ -46,9 +46,12 @@ public class PlayerMovement : MonoBehaviour
         // 가로축, 세로축 입력값을 통해 moveDirection 구함
         moveDirection = new Vector2(playerInput.moveHorizontal, playerInput.moveVertical);
         // 그 방향의 단위벡터 * 이동속도만큼의 addForce를 해줌 (관성 의도)
-        //playerRigidbody.AddForce(moveDirection.normalized * moveSpeed);
-        playerRigidbody.velocity = moveDirection.normalized * moveSpeed;
-
+        playerRigidbody.AddForce(moveDirection.normalized * moveSpeed);
+        // 만약 플레이어의 속도가 목표 속도에 도달했다면 속도를 고정시킴
+        if(playerRigidbody.velocity.sqrMagnitude > moveSpeed) 
+        {
+            playerRigidbody.velocity = moveDirection.normalized * moveSpeed;
+        }
     }
 
     // 마우스 방향으로 우주선을 회전

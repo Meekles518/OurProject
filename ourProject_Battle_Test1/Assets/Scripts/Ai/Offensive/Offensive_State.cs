@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.AI;
 //using static UnityEngine.RuleTile.TilingRuleOutput;
 
-// 수비형 적의 State들의 부모 클래스
-public class Defensive_State
+// 공격형 적의 State들의 부모 클래스
+public class Offensive_State
 {
-    // State의 종류를 enum으로 선언
+    // State의 종류를 enum으로 선언 (모든 종류의 적들이 공유)
     public enum STATE
     {
         IDLE, // 초기 상태
@@ -29,18 +29,20 @@ public class Defensive_State
     protected EVENT stage; // 현재 진행되고 있는 이벤트
     protected GameObject enemy; // 적 오브젝트
     protected Transform player; // 플레이어 트랜스폼
-    protected Defensive_State nextState; // 다음으로 넘어갈 스테이트 설정
+    protected Offensive_State nextState; // 다음으로 넘어갈 스테이트 설정
     protected Enemy_Control control; // 컨트롤 컴포넌트
+    public float currTime; // 공격형 적의 타이머에 사용할 현재시간
 
-    // Defensive_State 형식 선언
-    // 앞으로 이 클래스를 부모로 하는 자식 클래스들은 enemy, player, control을 따로 선언 할 필요가 없음
+    // Offensive_State 형식 선언
+    // 앞으로 이 클래스를 부모로 하는 자식 클래스들은 enemy, player, control, currTime을 따로 선언 할 필요가 없음
     // State 진입시 자동으로 현재 매서드를 Enter로 설정
-    public Defensive_State(GameObject _enemy, Transform _player, Enemy_Control _control)
+    public Offensive_State(GameObject _enemy, Transform _player, Enemy_Control _control, float _currTime)
     {
         enemy = _enemy;
         player = _player;
         control = _control;
-        stage = EVENT.ENTER;       
+        currTime = _currTime;
+        stage = EVENT.ENTER;
     }
 
     // Enter, Update, Exit 매서드 선언
@@ -49,8 +51,8 @@ public class Defensive_State
     public virtual void FixedUpdate() { stage = EVENT.UPDATE; }
     public virtual void Exit() { stage = EVENT.EXIT; }
 
-    // 다음 이벤트가 실행될 시기에 Defensive_Ai에서 stage 이벤트를 실행
-    public Defensive_State Process()
+    // 다음 매서드가 실행될 시기에 Ai 컴포넌트에서 다음 매서드를 결정
+    public Offensive_State Process()
     {
         if (stage == EVENT.ENTER) Enter();
         if (stage == EVENT.UPDATE) FixedUpdate();
@@ -73,7 +75,6 @@ public class Defensive_State
         // 플레이어가 큰 어그로 범위 안에 들어와 있다면
         if (PlayertoSpawn <= largeAgrro)
         {
-
             // 작은 어그로 범위에 들어왔는지 판단, 그렇다면 어그로 끌림
             if (PlayertoSpawn <= smallAgrro)
             {
@@ -91,5 +92,5 @@ public class Defensive_State
             }
         }
         return false;
-    }    
+    }
 }

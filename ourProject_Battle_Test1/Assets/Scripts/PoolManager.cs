@@ -4,6 +4,7 @@ using UnityEngine;
 
 // 오브젝트의 지속적인 생성, 파괴에 의한 메모리 손실을 없애기 위해 제작
 // 모든 프리팹들을 리스트로 저장해 각 리스트에서 필요한 오브젝트를 꺼내서 사용
+// 추후에 각 유형의 적들을 넣어서 전대매니저 스크립트로 원하는 위치에 전대를 생성할 수 있게 할 예정
 public class PoolManager : MonoBehaviour
 {
 
@@ -66,6 +67,7 @@ public class PoolManager : MonoBehaviour
 
         }
 
+        // 할당된 게임 오브젝트를 리턴
         return Select;
 
     }

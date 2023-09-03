@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// 실제로 총알을 생성하고 발사하는 스크립트
+// 포대 자체에 컴포넌트로 탑재, 모든 유형의 적이 사용가능
 public class Shooter : MonoBehaviour
 {
     // 총의 상태를 표현하는데 사용할 타입을 선언한다
@@ -15,15 +17,15 @@ public class Shooter : MonoBehaviour
     public State state { get; private set; } // 현재 총의 상태
 
     public Transform fireTransform; // 투사체가 발사될 위치
-    public Rigidbody2D objectRigidbody; // 플레이어의  Rigidbody
+    public Rigidbody2D objectRigidbody; // 발사자의  Rigidbody
 
     public int magCapacity; // 탄창 용량
     public int magAmmo; // 현재 탄창에 남아있는 탄약
     public float recoil; // 발사시 반동
-    public int bulletType;
+    public int bulletType; // 발사하는 총알의 타입 예) 플레이어 총알, 적 총알 등
 
-    public float timeBetFire; // 투사체 발사 간격
     private float lastFireTime; // 총을 마지막으로 발사한 시점
+    public float timeBetFire; // 투사체 발사 간격
     public int projectilesPerFire; // 한번 클릭시 발사하는 투사체 수
     public float timeBetProjectiles; // 한번 클릭시 발사되는 투사체 간의 시간 간격
     public float reloadTime; // 재장전 소요 시간
@@ -33,15 +35,17 @@ public class Shooter : MonoBehaviour
     {
         // 현재 탄창을 가득채우기
         magAmmo = magCapacity;
-        // 총의 현재 상태를 총을 쏠 준비가 된 상태로 변경
+        // 포대의 현재 상태를 투사체를 쏠 준비가 된 상태로 변경
         state = State.Ready;
-        // 마지막으로 총을 쏜 시점을 초기화
+        // 마지막으로 투사체를 쏜 시점을 초기화
         lastFireTime = 0;
+        // 발사기의 리지드바디 컴포넌트를 가져옴
+        objectRigidbody = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
     {
-        // 총의 현재 위치를 지속적으로 업데이트
+        // 포대의 현재 위치를 지속적으로 업데이트
         fireTransform = gameObject.transform;
     }
 
@@ -49,7 +53,7 @@ public class Shooter : MonoBehaviour
     public void Fire()
     {
         // 현재 상태가 발사 가능한 상태
-        // && 마지막 총 발사 시점에서 timeBetFire 이상의 시간이 지남
+        // && 마지막 투사체 발사 시점에서 timeBetFire 이상의 시간이 지남
         if (state == State.Ready
             && Time.time >= lastFireTime + timeBetFire)
         {
@@ -72,7 +76,7 @@ public class Shooter : MonoBehaviour
         
         if (magAmmo <= 0)
         {
-            // 탄창에 남은 탄약이 없다면, 총의 현재 상태를 Empty으로 갱신
+            // 탄창에 남은 탄약이 없다면, 현재 상태를 Empty으로 갱신
             state = State.Empty;
             
         }
@@ -84,7 +88,7 @@ public class Shooter : MonoBehaviour
             // 한번의 클릭에 발사하는 투사체수 만큼 for문 안을 반복
             for (int i = 0; i < projectilesPerFire; i++)
             {               
-                // 실제 총알 발사 메서드 ShootProjectiles가 클릭당 발사 속도마다 작동
+                // 실제 투사체 발사 메서드 ShootProjectiles가 클릭당 발사 속도마다 작동
                 Invoke("ShootProjectiles", timeBetProjectiles * i);
                 
             }
@@ -126,7 +130,7 @@ public class Shooter : MonoBehaviour
         //탄창에 탄약을 채운다.
         magAmmo = magCapacity;
 
-        // 총의 현재 상태를 발사 준비된 상태로 변경
+        // 현재 상태를 발사 준비된 상태로 변경
         state = State.Ready;
     }
 }
