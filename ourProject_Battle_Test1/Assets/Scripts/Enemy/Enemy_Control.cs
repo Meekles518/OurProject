@@ -22,6 +22,7 @@ public class Enemy_Control : MonoBehaviour
     public float MaxAtkRange; // 최대 공격 사거리
     public float timer; // 타이머 변수
     public int projectilesPerFire; // 한번 클릭시 발사하는 투사체 수
+    public bool isAggro;
 
     public enum STATE
     {
@@ -47,6 +48,7 @@ public class Enemy_Control : MonoBehaviour
         // 에러가 나지않게 초기값들 설정
         statename = STATE.IDLE;
         isShoot = false;
+        isAggro = false;
         timer = 100;
         // 유일하게 Enemy_Control이 계산가능한 거리값, 나머지는 각 Ai 스크립트로 부터 가져옴
         PlayertoFleetSpawn = Vector2.Distance(player.position, FleetSpawnpoint);

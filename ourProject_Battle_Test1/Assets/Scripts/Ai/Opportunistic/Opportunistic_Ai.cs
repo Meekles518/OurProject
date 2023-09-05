@@ -51,5 +51,13 @@ public class Opportunistic_AI : MonoBehaviour
         currentState = currentState.Process();
         // 현재 State를 Enmey_Control로 전달
         control.statename = (Enemy_Control.STATE)currentState.name;
+        if(currentState.Aggro() == true)
+        {
+            control.isAggro = true;
+        }
+        else
+        {
+            control.isAggro = false;
+        }
     }
 }

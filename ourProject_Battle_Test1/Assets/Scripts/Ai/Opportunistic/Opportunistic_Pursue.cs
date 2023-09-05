@@ -23,23 +23,18 @@ public class Opportunistic_Pursue : Opportunistic_State
     {
         // 사격 가능
         control.isShoot = true;
-
-        if (!Aggro())
-        {
-            GameManager.instance.isNotOppEngage &= true;
-        }
+        Debug.Log(Aggro());
+        //if (this.control == GameManager.OppControl)
 
         // 본인의 어그로가 끌려있지 않고 수비형적의 어그로가 끌려있지 않을 때
-        if ((!Aggro() && !GameManager.instance.isDefensiveEngage))
+        if (( GameManager.OppControl == null && !GameManager.instance.isDefensiveEngage)
+           || (GameManager.OppControl != null && GameManager.OppControl.PlayertoFleetSpawn > GameManager.OppControl.largeAgrro))
         {
-            // 플레이어가 자신의 큰 어그로 범위 내에 없다면
-            if (control.PlayertoFleetSpawn > control.largeAgrro)
-            {
+
                 // 다음 스테이트를 Retreat로 변경
                 nextState = new Opportunistic_Retreat(enemy, player, control);
                 stage = EVENT.EXIT;
 
-            }
         }
     }
     public override void Exit()

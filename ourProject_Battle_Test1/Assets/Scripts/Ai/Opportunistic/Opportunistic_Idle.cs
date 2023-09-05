@@ -16,8 +16,7 @@ public class Opportunistic_Idle : Opportunistic_State
     // Idle 진입시
     public override void Enter()
     {
-        GameManager.instance.isNotOppEngage &= true;
-        Debug.Log("Idle");
+
         base.Enter();
     }
 
@@ -26,13 +25,18 @@ public class Opportunistic_Idle : Opportunistic_State
     {
         // 사격 불가
         control.isShoot = false;
+        Debug.Log(Aggro());
 
         // 수비형적의 어그로가 끌리거나 본인의 어그로가 끌렸다면
-        if (GameManager.instance.isDefensiveEngage || Aggro() || GameManager.instance.isNotOppEngage == false)
+        if (GameManager.instance.isDefensiveEngage || Aggro() || GameManager.OppControl.isAggro == true)
         {
             if (Aggro())
             {
-                GameManager.instance.isNotOppEngage &= false;
+                if(GameManager.OppControl == null)
+                {
+                    GameManager.OppControl = control;
+                    Debug.Log(GameManager.OppControl);
+                }
             }
             // 다음 스테이트를 Pursue로 설정
             nextState = new Opportunistic_Pursue(enemy, player, control);

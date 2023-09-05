@@ -17,6 +17,11 @@ public class Opportunistic_Retreat : Opportunistic_State
 
     public override void Enter()
     {
+        if (GameManager.OppControl == control)
+        {
+            GameManager.OppControl = null;
+        }
+        Debug.Log("Idle");
         Debug.Log("Retreat");
         base.Enter();
     }
@@ -28,6 +33,10 @@ public class Opportunistic_Retreat : Opportunistic_State
         // 후퇴 도중 어그로가 끌리거나 수비형적의 어그로가 끌렸을 시
         if (GameManager.instance.isDefensiveEngage || Aggro())
         {
+            if(Aggro() && GameManager.OppControl == null)
+            {
+                GameManager.OppControl = control;
+            }
             // 다음 스테이트를 Pursue로 변경
             nextState = new Opportunistic_Pursue(enemy, player, control);
             stage = EVENT.EXIT;

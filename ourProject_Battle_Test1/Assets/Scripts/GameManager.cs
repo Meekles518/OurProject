@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public PlayerInput playerInput;
     public bool isDefensiveEngage;
-    public bool isNotOppEngage;
+    public static Enemy_Control OppControl;
 
 
     void Awake()
@@ -18,8 +18,14 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         isDefensiveEngage = false;
-        isNotOppEngage = true;
+        OppControl = null;
+      
 
 
+    }
+    public void FixedUpdate()
+    {
+        Debug.Log(OppControl);
+        Debug.Log(GameManager.OppControl.isAggro);
     }
 }
