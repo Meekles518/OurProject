@@ -17,25 +17,23 @@ public class Enemy_Shooter : MonoBehaviour
     // 오브젝트 활성화 시 적용
     private void OnEnable()
     {
+        control = GetComponent<Enemy_Control>();
+        shooter.objectRigidbody = GetComponent<Rigidbody2D>();
         // 재장전 시기간의 시간 간격 초기화
         reloadInterval = 10f;
         // 마지막 장전 시점 초기화
-        lastReloadTime = 0;
-        
+        lastReloadTime = 0;       
         // 불 변수 초기화
-        isShoot = false;
- 
+        isShoot = false; 
         // shooter의 여러 값들을 설정
         shooter.magCapacity = 10;
-        shooter.projectilesPerFire = 1;
-        shooter.objectRigidbody = GetComponent<Rigidbody2D>();
+        shooter.projectilesPerFire = control.projectilesPerFire;
         shooter.bulletType = 1;
         shooter.recoil = 10;
         shooter.timeBetFire = 1.0f;
         shooter.timeBetProjectiles = 0.1f;
         shooter.reloadTime = 1f;
-        player = GameObject.Find("Player");
-        control = GetComponent<Enemy_Control>();
+        player = GameObject.Find("Player");    
         // 최대 공격 사거리를 Enemy_Control에서 받아옴
         MaxAtkRange = control.MaxAtkRange;
 

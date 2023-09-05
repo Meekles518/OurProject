@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject player;
     public PlayerInput playerInput;
     public bool isDefensiveEngage;
+    public bool isNotOppEngage;
 
 
     void Awake()
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
 
         instance = this;
         isDefensiveEngage = false;
+        isNotOppEngage = true;
 
 
     }

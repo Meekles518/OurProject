@@ -21,6 +21,7 @@ public class Enemy_Control : MonoBehaviour
     public float largeAgrro; // 큰 어그로 범위
     public float MaxAtkRange; // 최대 공격 사거리
     public float timer; // 타이머 변수
+    public int projectilesPerFire; // 한번 클릭시 발사하는 투사체 수
 
     public enum STATE
     {
@@ -40,8 +41,6 @@ public class Enemy_Control : MonoBehaviour
         player = GameObject.Find("Player").transform;
         // 자신의 스폰위치를 현재 위치로 설정
         SelfSpawnposition = transform.position;
-        // 최대 공격사거리 고정
-        MaxAtkRange = 15f;
         // 어그로 범위 설정 (이거를 지우면 유니티 인스펙터에서 실시간으로 개별 전대별 설정가능)
         smallAgrro = 15f;
         largeAgrro = 25f;

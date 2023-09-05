@@ -24,8 +24,13 @@ public class Opportunistic_Pursue : Opportunistic_State
         // 사격 가능
         control.isShoot = true;
 
+        if (!Aggro())
+        {
+            GameManager.instance.isNotOppEngage &= true;
+        }
+
         // 본인의 어그로가 끌려있지 않고 수비형적의 어그로가 끌려있지 않을 때
-        if (!Aggro() && !GameManager.instance.isDefensiveEngage)
+        if ((!Aggro() && !GameManager.instance.isDefensiveEngage))
         {
             // 플레이어가 자신의 큰 어그로 범위 내에 없다면
             if (control.PlayertoFleetSpawn > control.largeAgrro)
