@@ -13,6 +13,7 @@ public class PlayerInput : MonoBehaviour
     private string fireButtonName = "Fire1"; // 발사를 위한 입력 버튼 이름
     private string specialButtonName = "Fire2"; // 특수 공격을 위한 입력 버튼 이름
     private string reloadButtonName = "Reload"; // 재장전을 위한 입력 버튼 이름
+    private string missileButtonName = "Missile";
 
     // 값 할당은 내부에서만 가능
     public float moveVertical { get; private set; } // 감지된 움직임 입력값
@@ -20,6 +21,7 @@ public class PlayerInput : MonoBehaviour
     public bool fire { get; private set; } // 감지된 발사 입력값
     public bool special { get; private set; } // 감지된 특수 공격 입력값
     public bool reload { get; private set; } // 감지된 재장전 입력값
+    public bool missile { get; private set; }
 
     // 매프레임 사용자 입력을 감지
     private void Update()
@@ -46,6 +48,7 @@ public class PlayerInput : MonoBehaviour
         special = Input.GetButton(specialButtonName);
         // reload에 관한 입력 감지
         reload = Input.GetButtonDown(reloadButtonName);
+        missile = Input.GetButtonDown(missileButtonName);
         
     }
 }

@@ -28,7 +28,7 @@ public class Enemy_Shooter : MonoBehaviour
         // shooter의 여러 값들을 설정
         shooter.magCapacity = 10;
         shooter.projectilesPerFire = control.projectilesPerFire;
-        shooter.bulletType = 1;
+        //shooter.bulletType = 1;
         shooter.recoil = 10;
         shooter.timeBetFire = 1.0f;
         shooter.timeBetProjectiles = 0.1f;

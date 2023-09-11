@@ -23,9 +23,9 @@ public class PlayerShooter : MonoBehaviour
         // shooter의 여러 값들을 설정, 이렇게 한 이유는 테스트 시 플레이어의 스탯을 쉽게 조정가능
         // 실제로는 필드 내에서 재장선 속도등이 바뀔 수 있어야함으로 추후에 수정 필요
         shooter.magCapacity = 10;
-        shooter.projectilesPerFire = 2;
+        
         shooter.objectRigidbody = GetComponent<Rigidbody2D>();
-        shooter.bulletType = 0;
+        
         shooter.recoil = 10;
         shooter.timeBetFire = 1.0f;
         shooter.timeBetProjectiles = 0.1f;
