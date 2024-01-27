@@ -13,7 +13,7 @@ public class Offensive_Idle : Offensive_State
         name = STATE.IDLE;
     }
 
-    // Idle 진입시
+    // Idle 진입시 
     public override void Enter()
     {
         currTime = 0f; // 현재시간 초기화

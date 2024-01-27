@@ -20,7 +20,7 @@ public class Offensive_State
     // 각 State의 진입, 진행중, 나올때 실행할 매서드들을 enum으로 선언
     public enum EVENT
     {
-        ENTER,
+        ENTER,  //진입
         UPDATE,
         EXIT
     };

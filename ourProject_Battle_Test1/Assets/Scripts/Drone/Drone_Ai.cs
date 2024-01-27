@@ -23,7 +23,8 @@ public class Drone_AI : MonoBehaviour
         currentState = new Drone_Idle(gameObject, player, control, currTime); // 초기 스테이트를 Idle로 설정
 
         control.timer = timer;
-    }
+
+    }//OnEnable
 
 
     // 값들을 지속적으로 갱신
@@ -33,7 +34,8 @@ public class Drone_AI : MonoBehaviour
 
         // 현재 State를 지속적으로 갱신
         currentState = currentState.Process();
-        // 현재 State를 Enmey_Control로 전달
-        control.statename = (Enemy_Control.STATE)currentState.name;
-    }
+        // 현재 State를 Drone_Control에 전달
+        control.statename = (Drone_Control.STATE)currentState.name;
+
+    }//FixedUpdate
 }
