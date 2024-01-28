@@ -31,6 +31,7 @@ public class Drone_Idle : Drone_State
             stage = EVENT.EXIT;
 
         }
+
         //산개 상태가 아니고, 자동 모드이고, 드론의 Target이 설정되어 있다면
         else if (control.playerInput.auto && control.TargetPosition != null)
         {

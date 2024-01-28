@@ -90,6 +90,13 @@ public class Drone_Movement : MonoBehaviour
            
         }
 
+        // Follow State일 때 목표 위치를
+        else if (control.statename == Drone_Control.STATE.FOLLOW)
+        {
+            //Drone_Control에 저장되어 있는 FollowPosition으로 이동
+            Targetposition = control.FollowPosition;
+        }
+
         // 움직임 실행
         Move();
         // 회전 실행

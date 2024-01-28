@@ -348,7 +348,7 @@ MonoBehaviour:
   magCapacity: 5
   magAmmo: 0
   recoil: 1
-  bulletType: 0
+  bulletType: 1
   timeBetFire: 1
   projectilesPerFire: 0
   timeBetProjectiles: 0.2
@@ -455,7 +455,7 @@ MonoBehaviour:
   magCapacity: 5
   magAmmo: 0
   recoil: 1
-  bulletType: 0
+  bulletType: 1
   timeBetFire: 1
   projectilesPerFire: 0
   timeBetProjectiles: 0.2
