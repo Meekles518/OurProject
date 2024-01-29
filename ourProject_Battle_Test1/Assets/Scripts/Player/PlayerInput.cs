@@ -16,6 +16,8 @@ public class PlayerInput : MonoBehaviour
     private string missileButtonName = "Missile";
     private string autoButtonName = "Auto";
 
+    
+
     // 값 할당은 내부에서만 가능
     public float moveVertical { get; private set; } // 감지된 움직임 입력값
     public float moveHorizontal { get; private set; } // 감지된 회전 입력값
@@ -23,7 +25,9 @@ public class PlayerInput : MonoBehaviour
     public bool special { get; private set; } // 감지된 특수 공격 입력값
     public bool reload { get; private set; } // 감지된 재장전 입력값
     public bool missile { get; private set; }
-    public bool auto { get; private set; }
+    public bool auto { get; private set; }  //감지된 Auto모드 변환
+    public bool isAuto = false; //현재 Auto인지 아닌지를 저장할 bool 변수
+
 
     // 매프레임 사용자 입력을 감지
     private void Update()
@@ -52,6 +56,18 @@ public class PlayerInput : MonoBehaviour
         reload = Input.GetButtonDown(reloadButtonName);
         missile = Input.GetButtonDown(missileButtonName);
         auto = Input.GetButtonDown(autoButtonName);
+
+        if (auto && isAuto == false)
+        {
+            isAuto = true;
+            Debug.Log("isAuto T");
+        }
+
+        else if (auto && isAuto == true)
+        {
+            isAuto = false;
+            Debug.Log("isAuto F");
+        }
 
     }
 }

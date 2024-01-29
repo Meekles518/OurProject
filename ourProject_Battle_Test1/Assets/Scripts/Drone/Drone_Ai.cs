@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 // 공격형 적 State들과 Enemy_Control 사이를 연결
 public class Drone_AI : MonoBehaviour
 {
-    Drone_State currentState; // 현재 스테이트
+    public Drone_State currentState; // 현재 스테이트
     public Transform player; // 플레이어 트랜스폼
     public Drone_Control control; // Enemy_Control 컴포넌트
 

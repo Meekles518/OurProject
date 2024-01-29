@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        Debug.Log(OppControl);
-        Debug.Log(GameManager.OppControl.isAggro);
+       // Debug.Log(OppControl);
+        //Debug.Log(GameManager.OppControl.isAggro);
     }
 }

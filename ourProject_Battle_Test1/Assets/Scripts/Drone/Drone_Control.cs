@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 // 
 public class Drone_Control : MonoBehaviour
 {
+ 
     public Transform player; // 플레이어 트랜스폼
     public Transform selfposition; // 드론 트랜스폼
     //public float smallAgrro; // 작은 어그로 범위
@@ -14,9 +15,9 @@ public class Drone_Control : MonoBehaviour
     public float timer; // 타이머 변수
     public PlayerInput playerInput; // PlayerInput을 가져옴
     public bool isSpread; //산개 여부를 확인하는 bool 변수
+    public bool isAuto; //Auto 여부를 확인하는 bool 변수
 
     //이 아래의 변수들은 Drone의 Target 설정에 사용되는 변수
-
     public Transform droneTarget; //  드론의 Target의 Transform을 저장할 변수
     public Vector2 TargetPosition; //  Target의 Position을 나타낼 vector2 변수
     public RaycastHit2D[] Targets;  // CirclecastAll로 가져오는 모든 오브젝트들을 저장할 배열
@@ -26,7 +27,6 @@ public class Drone_Control : MonoBehaviour
 
 
     //이 아래의 변수들은 Follow State 관리에 사용되는 변수
-
     public float Player_drone_Distance; //Player와 Drone의 현재 거리를 저장할 변수
     public float P_d_maxDistance;   // Drone이 Player로부터 멀어질 수 있는 최대 거리
     public Vector2 Last_player; //Follow State 진입 시의 Player Vector2
@@ -34,6 +34,10 @@ public class Drone_Control : MonoBehaviour
     public Vector2 relativePosition;    // Follow State 진입 시의 Player와 Drone의 상대 위치
     public Vector2 FollowPosition;  //Follow State시 Drone이 이동해야 할 목표 위치
 
+
+    public Vector2 mousePosition;   //월드맵 상에서의 현재 마우스 위치 
+    public Vector2 Player_vec;  //Player의 Vector2
+    public Vector2 Drone_vec;   //Drone의 Vector2
 
     public enum STATE
     {
@@ -51,7 +55,8 @@ public class Drone_Control : MonoBehaviour
         // 플레이어 오브젝트를 찾아 트랜스폼 할당
         player = GameObject.Find("Player").transform;
         // PlayerInput을 가져옴
-        playerInput = GetComponent<PlayerInput>();
+        //playerInput = GetComponent<PlayerInput>();
+        playerInput = player.GetComponent<PlayerInput>();
         // 자신의 Transform 컴포넌트 가져옴
         selfposition = GetComponent<Transform>();
         //스캔 범위 설정
@@ -60,9 +65,11 @@ public class Drone_Control : MonoBehaviour
         // 에러가 나지않게 초기값들 설정
         statename = STATE.IDLE;
         timer = 100;
-        isSpread = false;
+        isAuto = playerInput.isAuto;
         droneTarget = null;
         Nearest_enemy = null;
+        isAuto = playerInput.isAuto;
+        Debug.Log(playerInput.isAuto);
         Player_drone_Distance = 0f;
         P_d_maxDistance = 20f;  //임의로 최대 거리 20f로 설정
  
@@ -71,13 +78,17 @@ public class Drone_Control : MonoBehaviour
     
     public void FixedUpdate()
     {
+
+        mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
         // 자기 위치 갱신
         selfposition = GetComponent<Transform>();
-        Vector2 Drone_pos = selfposition.position;
-        Vector2 Player_pos = player.position;
+        Drone_vec = selfposition.position;
+        Player_vec = player.position;
         //Player와 Drone의 거리 계산
-        Player_drone_Distance = Vector2.Distance(Drone_pos, Player_pos);
+        Player_drone_Distance = Vector2.Distance(Drone_vec, Player_vec);
 
+        //Special Input, 산개 모드일 경우
         if (playerInput.special)
         {
             isSpread = true;
@@ -86,6 +97,9 @@ public class Drone_Control : MonoBehaviour
         {
             isSpread = false;
         }
+
+        //Auto Input, Auto 모드 버튼을 누르면 현재 Auto 상태를 뒤집음. 기본 상태는 false
+        isAuto = playerInput.isAuto;
 
         //드론의 Target이 설정되있지 않다면
         if (droneTarget == null)
@@ -157,6 +171,27 @@ public class Drone_Control : MonoBehaviour
         return Result;
 
     }//Nearest
+
+    //마우스 - 드론 - Player 의 세 점을 연결할 때 나오는 각도를 구해서, 90도가 넘는지 확인하는 함수
+    public bool Over90or270()
+    {
+        Vector2 P_D_vector = Player_vec - Drone_vec;    //Drone 벡터에서 Player 벡터를 뺀 값
+        Vector2 M_D_vector = mousePosition - Drone_vec; //Mouse 벡터에서 Drone 벡터를 뺀 값
+
+        //마우스 - 드론 - Player의 세 점을 연결할 때 나오는 각도값
+        float Rotate = Quaternion.FromToRotation(P_D_vector, M_D_vector).eulerAngles.z;
+        
+        //각도가 90도를 넘고 270보다 작으면
+        if (Rotate > 90 && Rotate < 270)
+        {
+            return true;   //true 
+
+        }
+
+        //각도가 90도를 넘지 않는다면
+        return false;   //false
+       
+    }//Over90
 
 
 }

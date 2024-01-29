@@ -29,7 +29,7 @@ public class PlayerShooter : MonoBehaviour
         shooter.recoil = 10;
         shooter.timeBetFire = 1.0f;
         shooter.timeBetProjectiles = 0.1f;
-        shooter.reloadTime = 1f;
+        shooter.reloadTime = 5f;
 
 
     }
@@ -37,15 +37,17 @@ public class PlayerShooter : MonoBehaviour
     // 입력을 감지하고 총 발사하거나 재장전
     private void FixedUpdate()
     {
-        // 플레이어의 입력이 fire라면
-        if (playerInput.fire)
+        // 플레이어의 입력이 fire이고, Shooter의 State가 Ready(발사 가능한 상태)라면
+        if (playerInput.fire && shooter.state == Shooter.State.Ready)
         {
             // 발사를하는 Fire 매서드 실행
             shooter.Fire();
            
         }
-        // 마지막 장전 시간으로 부터의 시간이 장전주기보다 길고 탄창의 탄수가 최대 탄수보다 적을 때
-        else if (Time.time - lastReloadTime >= reloadInterval && shooter.magAmmo != shooter.magCapacity)
+
+        // 마지막 장전 시간으로 부터의 시간이 장전주기보다 길고,  
+        //탄창의 탄수가 최대 탄수보다 적을 때 혹은 탄창이 비어있다면
+        else if (Time.time - lastReloadTime >= reloadInterval && (shooter.magAmmo == 0 || shooter.magAmmo != shooter.magCapacity))
         {
                 // 장전을 하는 Reload 매서드 실행
                 shooter.Reload();
