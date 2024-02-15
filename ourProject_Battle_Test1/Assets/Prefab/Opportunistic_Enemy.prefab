@@ -311,6 +311,8 @@ MonoBehaviour:
   MaxAtkRange: 0
   timer: 0
   projectilesPerFire: 0
+  isAggro: 0
+  behavior: 2
   statename: 0
   isShoot: 0
 --- !u!114 &4624741216700696570

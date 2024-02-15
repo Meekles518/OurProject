@@ -24,6 +24,8 @@ public class Enemy_Control : MonoBehaviour
     public int projectilesPerFire; // 한번 클릭시 발사하는 투사체 수
     public bool isAggro;
 
+    public Behavior behavior; //적의 행동 성향을 저장할 변수
+
     public enum STATE
     {
         IDLE, // 초기 상태
@@ -32,6 +34,20 @@ public class Enemy_Control : MonoBehaviour
         GOBACK, // 복귀 상태
         RETREAT // 후퇴 상태
     };
+
+
+    //적의 행동을 열거, Map에서 적 종류를 빼올 때 구별하기 위해 사용.
+    public enum Behavior
+    {
+        Defensive, 
+        Offensive,
+        Opportunistic,
+        Stationary,
+
+    }
+
+
+
 
     public STATE statename; // STATE 변수 (Enemy_Movement 제어)
     public bool isShoot; // 발사를 제어하는 불 변수 (Enemy_Shooter 제어)

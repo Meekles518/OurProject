@@ -204,6 +204,8 @@ MonoBehaviour:
   MaxAtkRange: 0
   timer: 0
   projectilesPerFire: 0
+  isAggro: 0
+  behavior: 1
   statename: 0
   isShoot: 0
 --- !u!114 &333761218056374205
@@ -399,7 +401,7 @@ MonoBehaviour:
   recoil: 1
   bulletType: 0
   timeBetFire: 1
-  projectilesPerFire: 0
+  projectilesPerFire: 1
   timeBetProjectiles: 0.2
   reloadTime: 1
 --- !u!1 &8991329499025578409
@@ -506,6 +508,6 @@ MonoBehaviour:
   recoil: 1
   bulletType: 0
   timeBetFire: 1
-  projectilesPerFire: 0
+  projectilesPerFire: 1
   timeBetProjectiles: 0.2
   reloadTime: 1
