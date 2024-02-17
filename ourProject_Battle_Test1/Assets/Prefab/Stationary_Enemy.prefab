@@ -312,6 +312,10 @@ MonoBehaviour:
   timer: 0
   projectilesPerFire: 5
   isAggro: 0
+<<<<<<< HEAD
+=======
+  behavior: 3
+>>>>>>> 67cb40017609cbdac374f92b550721e1355ae257
   statename: 0
   isShoot: 0
 --- !u!114 &3518396701203483968
