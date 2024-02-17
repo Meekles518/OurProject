@@ -23,7 +23,6 @@ public class Drone_Movement : MonoBehaviour
     private float xrandomRange = 2f; // x좌표 랜덤변수 범위
     private float yrandomRange = 2f; // y좌표 랜덤변수 범위
     private float currTime; // 현재시간
-    
 
     // 오브젝트 활성화 시 실행
     private void OnEnable()
@@ -43,6 +42,8 @@ public class Drone_Movement : MonoBehaviour
     {
         // 플레이어의 위치를 지속적으로 갱신
         Playerposition = player.transform.position;
+
+
          
 
         // 이동시 적들이 뭉치는 현상을 방지하기 위해 플레이어 주위의 랜덤한 지점으로 이동
@@ -60,14 +61,14 @@ public class Drone_Movement : MonoBehaviour
         }
 
         // Idle State일 때 목표위치를 현재위치(자신의 스폰위치) + y축방향으로 설정
-        if (control.statename == Drone_Control.STATE.IDLE && control.isSpread == false && control.isAuto == false)
+        if (control.statename == Drone_Control.STATE.IDLE && control.isSpread == false && control.playerInput.auto == false)
         {
             //마우스 커서의 위치로 향하게 함
-            Targetposition = control.mousePosition;
+            Targetposition = Input.mousePosition;
         }
 
         // AUTO State일 때 목표위치를 
-        else if (control.statename == Drone_Control.STATE.IDLE && control.isSpread == false && control.isAuto == true)
+        else if (control.statename == Drone_Control.STATE.IDLE && control.isSpread == false && control.playerInput.auto == true)
         {
             //Player의 위치에서 일정 범위 내의 무작위 위치로 향하게 함
             Targetposition = Playerposition + new Vector2(x_Random, y_Random);
@@ -77,8 +78,7 @@ public class Drone_Movement : MonoBehaviour
         else if (control.statename == Drone_Control.STATE.SPREAD)
         {
             //마우스 커서의 반대 위치로 가게 함
-            //Targetposition = new Vector2(control.selfposition.position.x, control.selfposition.position.y) + new Vector2(control.selfposition.position.x - Input.mousePosition.x, control.selfposition.position.y - Input.mousePosition.y);
-            Targetposition = ((Vector2)transform.position - control.mousePosition) +(Vector2)transform.position;
+            Targetposition = new Vector2(control.selfposition.position.x, control.selfposition.position.y) + new Vector2(control.selfposition.position.x - Input.mousePosition.x, control.selfposition.position.y - Input.mousePosition.y);
         }
 
         // Engage State일 때 목표위치를 
@@ -111,7 +111,7 @@ public class Drone_Movement : MonoBehaviour
     private void Move()
     {
             // 이동방향 = 목표위치 - 현재위치 + 랜덤위치
-            moveDirection = Targetposition - (Vector2)transform.position;
+            moveDirection = Targetposition;
             // 이동방향으로 AddForce를 해줌 (관성 부여)
             droneRigidbody.AddForce(moveDirection.normalized * moveSpeed);
             // 만약 드론의 속도가 목표 속도에 도달했다면 속도를 고정시킴
@@ -129,7 +129,7 @@ public class Drone_Movement : MonoBehaviour
     {
 
         // 회전 방향 = 목표위치 - 현재위치
-        rotateDirection = Targetposition - (Vector2)transform.position;
+        rotateDirection = Targetposition - new Vector2(transform.position.x, transform.position.y);
         // 회전해야 하는 각도를 '도'로 구현
         actualRotate = Quaternion.FromToRotation((Vector2)transform.up, rotateDirection).eulerAngles.z;
 

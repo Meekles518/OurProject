@@ -25,10 +25,10 @@ public class Drone_State
     };
 
     public STATE name;  // 자신의 현재 STATE를 지정할 변수
-    public EVENT stage;  // 현재 진행되고 있는 이벤트
+    protected EVENT stage;  // 현재 진행되고 있는 이벤트
     protected GameObject enemy; // 적 오브젝트
     protected Transform player; // 플레이어의 Transform
-    public Drone_State nextState; // 다음으로 넘어갈 State 설정
+    protected Drone_State nextState; // 다음으로 넘어갈 State 설정
     protected Drone_Control control;  //Control 컴포넌트
     public float currTime;  // 타이머, 필요 없을 수도 있음
 
@@ -55,8 +55,6 @@ public class Drone_State
     // 다음 매서드가 실행될 시기에, Ai 컴포넌트에서 다음 매서드를 결정하게 하는 함수
     public Drone_State Process()
     {
-        //Debug.Log("Process");
-        //Debug.Log(stage);
         if (stage == EVENT.ENTER) Enter();  //ENTER State를 UPDATE로 변경
         if (stage == EVENT.UPDATE) FixedUpdate();   //UPDATE State를 유지
         if (stage == EVENT.EXIT)

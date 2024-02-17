@@ -39,16 +39,6 @@ public class Drone_Follow : Drone_State
             stage = EVENT.EXIT;
         }    
 
-        //산개 상태에서, 마우스의 위치가 변경되어서 마우스-드론-Player의 세 점을 연결할 때의 각도가
-        //90도를 넘어서, 드론이 Player 쪽으로 이동해야 한다면
-        else if (control.Over90or270())
-        {
-            //다음 State를 Spread로 변경
-            nextState = new Drone_Spread(enemy, player, control, currTime);
-            stage = EVENT.EXIT;
-        }
-
-
         //Drone이 다시 Player와 일정 거리 이내로 가까워지면
         else if (control.Player_drone_Distance < control.P_d_maxDistance)
         {
@@ -57,9 +47,8 @@ public class Drone_Follow : Drone_State
             stage = EVENT.EXIT;
         }
 
-      
 
-
+        base.FixedUpdate();
     }//FixedUpdate
 
     //Follo State Exit

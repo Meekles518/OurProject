@@ -39,7 +39,7 @@ public class Drone_Engage : Drone_State
 
         }
 
-     
+        base.FixedUpdate();
 
     }//FixedUpdate
 
