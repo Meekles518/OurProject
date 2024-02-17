@@ -132,7 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fc358b1d36379844a34c30fc00d160c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isAuto: 0
 --- !u!114 &5660565311840691075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +348,7 @@ MonoBehaviour:
   magCapacity: 5
   magAmmo: 0
   recoil: 1
-  bulletType: 4
+  bulletType: 1
   timeBetFire: 1
   projectilesPerFire: 0
   timeBetProjectiles: 0.2
@@ -456,7 +455,7 @@ MonoBehaviour:
   magCapacity: 5
   magAmmo: 0
   recoil: 1
-  bulletType: 4
+  bulletType: 1
   timeBetFire: 1
   projectilesPerFire: 0
   timeBetProjectiles: 0.2

@@ -12,7 +12,7 @@ public class PoolManager : MonoBehaviour
     public GameObject[] Prefabs;
 
     //Pool 을 담을 List변수
-    public List<GameObject>[] Pools;
+    List<GameObject>[] Pools;
 
     //Pools list 초기화
     private void Awake()

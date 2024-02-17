@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 3241254069134726910}
   - component: {fileID: 6341330990329686079}
   - component: {fileID: -4031607501554778923}
-  - component: {fileID: -4442013720759300572}
   m_Layer: 8
   m_Name: Player Drone
   m_TagString: Player
@@ -222,7 +221,6 @@ MonoBehaviour:
   moveSpeed: 0
   rotateSpeed: 0
   moveDirection: {x: 0, y: 0}
-  mousePosition: {x: 0, y: 0}
 --- !u!114 &-4031607501554778923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,7 +238,6 @@ MonoBehaviour:
   timer: 0
   playerInput: {fileID: 0}
   isSpread: 0
-  isAuto: 0
   droneTarget: {fileID: 0}
   TargetPosition: {x: 0, y: 0}
   Target_layer:
@@ -255,16 +252,3 @@ MonoBehaviour:
   relativePosition: {x: 0, y: 0}
   FollowPosition: {x: 0, y: 0}
   statename: 0
---- !u!114 &-4442013720759300572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7449352372080968768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fc358b1d36379844a34c30fc00d160c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isAuto: 0
