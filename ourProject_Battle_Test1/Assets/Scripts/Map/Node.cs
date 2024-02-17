@@ -133,8 +133,8 @@ namespace Map
                 attainableState(); //클릭한 Node의 주변 Node의 state를 attainable로
                 setColor(); //색 변경
 
-                this.cloakEnemy(); //현재 Node와 주변 Node의 적 지우기
-                MapManager.instance.playerNode.checkEnemy(); //이동할 Node와 주변 Node의 적 표시하기
+                MapManager.instance.playerNode.cloakEnemy(); //현재 Node와 주변 Node의 적 지우기
+                this.checkEnemy(); //이동할 Node와 주변 Node의 적 표시하기
 
                 MapManager.instance.playerNode = this;
             }
